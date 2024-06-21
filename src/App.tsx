@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import TodoList from './components/TodoList';
 import './App.css';
+// import darkmode from './assets/icon-moon.svg';
 
 interface Todo {
   id: number;
@@ -93,10 +94,13 @@ const App: React.FC = () => {
 
   return (
     <div className={`container ${isDarkMode ? 'dark' : ''}`}>
-      <h1>Todo App</h1>
-      <button onClick={toggleDarkMode} className="dark-mode-toggle">
-        {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      <div className="todo1">
+        <h1>Todo </h1>
+        <button onClick={toggleDarkMode} className="dark-mode-toggle">
+        {isDarkMode ? 'Switch to Light Mode' : 'Dark Mode'}
       </button>
+      </div>
+
       <form onSubmit={handleAddTodo}>
         <input
           type="text"

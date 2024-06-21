@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cross from '../assets/icon-cross.svg';
 
 interface TodoItemProps {
   id: number;
@@ -34,7 +35,9 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, text, completed, toggleTodo, de
           {text}
         </span>
       )}
-      <button onClick={() => deleteTodo(id)}>Delete</button>
+      <button onClick={() => deleteTodo(id)} className="delete-button">
+        <img src={cross} alt="Delete" />
+      </button>
     </div>
   );
 };
