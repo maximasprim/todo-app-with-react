@@ -7,6 +7,7 @@ interface Todo {
   id: number;
   text: string;
   completed: boolean;
+  createdAt: Date;
 }
 
 type ActionType =
@@ -22,7 +23,7 @@ const initialState: Todo[] = [];
 const reducer = (state: Todo[], action: ActionType): Todo[] => {
   switch (action.type) {
     case 'ADD_TODO':
-      return [...state, { id: state.length + 1, text: action.text, completed: false }];
+      return [...state, { id: state.length + 1, text: action.text, completed: false, createdAt: new Date() }];
     case 'TOGGLE_TODO':
       return state.map(todo =>
         todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
@@ -46,6 +47,7 @@ const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [newTodo, setNewTodo] = useState('');
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [sortCriteria, setSortCriteria] = useState<'creation-date' | 'completion-status'>('creation-date');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -84,7 +86,16 @@ const App: React.FC = () => {
     dispatch({ type: 'CLEAR_COMPLETED' });
   };
 
-  const filteredTodos = state.filter(todo => {
+  const sortedTodos = [...state].sort((a, b) => {
+    if (sortCriteria === 'completion-status') {
+      return a.completed === b.completed ? 0 : a.completed ? -1 : 1;
+    } else if (sortCriteria === 'creation-date') {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    }
+    return 0;
+  });
+
+  const filteredTodos = sortedTodos.filter(todo => {
     if (filter === 'active') return !todo.completed;
     if (filter === 'completed') return todo.completed;
     return true;
@@ -97,8 +108,8 @@ const App: React.FC = () => {
       <div className="todo1">
         <h1>Todo </h1>
         <button onClick={toggleDarkMode} className="dark-mode-toggle">
-        {isDarkMode ? 'Switch to Light Mode' : 'Dark Mode'}
-      </button>
+          {isDarkMode ? 'Switch to Light Mode' : 'Dark Mode'}
+        </button>
       </div>
 
       <form onSubmit={handleAddTodo}>
@@ -110,12 +121,22 @@ const App: React.FC = () => {
         />
         <button type="submit">Add Todo</button>
       </form>
+
+      <div className="sort-options">
+        <label>Sort by: </label>
+        <select value={sortCriteria} onChange={(e) => setSortCriteria(e.target.value as 'creation-date' | 'completion-status')}>
+          <option value="creation-date">Creation Date</option>
+          <option value="completion-status">Completion Status</option>
+        </select>
+      </div>
+
       <TodoList
         todos={filteredTodos}
         toggleTodo={(id) => dispatch({ type: 'TOGGLE_TODO', id })}
         deleteTodo={(id) => dispatch({ type: 'DELETE_TODO', id })}
         updateTodo={handleUpdateTodo}
       />
+
       <div className="footer">
         <span>{itemsLeft} items left</span>
         <div className="filters">

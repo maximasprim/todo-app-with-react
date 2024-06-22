@@ -15,6 +15,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, toggleTodo, deleteTodo, upda
         <TodoItem
           key={todo.id}
           {...todo}
+          completed={todo.completed}
           toggleTodo={toggleTodo}
           deleteTodo={deleteTodo}
           updateTodo={updateTodo}
