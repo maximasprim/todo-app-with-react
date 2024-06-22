@@ -150,7 +150,7 @@ const App: React.FC = () => {
             Completed
           </button>
         </div>
-        <button onClick={handleClearCompleted}>Clear Completed</button>
+        <button className="clearCompleted" onClick={handleClearCompleted}>Clear Completed</button>
       </div>
     </div>
   );

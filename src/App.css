@@ -125,6 +125,11 @@ button:hover {
   background: #777;
   color: #fff;
 }
+.dark-mode-toggle{
+  /* background-color: #fff; */
+  /* color: #fff4f4; */
+  border: none;
+}
 
 .dark button:hover {
   background: #555;
@@ -144,4 +149,20 @@ button:hover {
 
 .dark .filters button.active {
   border-bottom: 2px solid #00bfff;
+}
+.delete{
+  background-color: #fff;
+}
+.edit{
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+.clearCompleted{
+  background-color: #fff;
+  color: #333;
+}
+.sort-options{
+  justify-content: center;
+  align-items: center;
 }

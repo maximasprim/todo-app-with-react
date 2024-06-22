@@ -36,11 +36,11 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, text, completed, toggleTodo, de
         </span>
       )}
       <div className="todo-actions">
-        <button onClick={() => deleteTodo(id)}>
+        <button className="delete "onClick={() => deleteTodo(id)}>
           <img src={cross} alt="Delete" />
         </button>
         {!isEditing && (
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button className="edit" onClick={() => setIsEditing(true)}>Edit</button>
         )}
       </div>
     </div>
